@@ -5,6 +5,9 @@
 Crear el archivo `.env` con base en `.env.example`
 
 ```sh
+# Reconstruir los sub-módulos después de clonar
+git submodule update --init --recursive
+
 # Contruir los contenedores
 docker-compose up --build
 ```

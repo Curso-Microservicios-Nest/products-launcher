@@ -2,17 +2,32 @@
 
 ## 1. Configurar el proyecto
 
+### - 1.1 Variables de entorno
+
 Crear el archivo `.env` con base en `.env.example`
+
+### - 1.2 Reconstruir sub-módulos
 
 ```sh
 # Reconstruir los sub-módulos después de clonar
 git submodule update --init --recursive
-
-# Contruir los contenedores
-docker-compose up --build
 ```
 
-## 2. Pasos para crear los Git Submodules
+## 2. 🐳Docker
+
+```sh
+# Construir los contenedores
+docker-compose up --build
+
+# Construir y ejecutar todos los contenedores
+docker-compose up -d
+```
+
+## 3. 📚Swagger
+
+<http://localhost:3000/api/docs>
+
+## 3. Pasos para crear los Git Submodules
 
 1. Crear un nuevo repositorio en GitHub
 2. Clonar el repositorio en la máquina local

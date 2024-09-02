@@ -16,18 +16,24 @@ git submodule update --init --recursive
 ## 2. 🐳Docker
 
 ```sh
-# Construir los contenedores
+# Construir los contenedores (para desarrollo)
 docker-compose up --build
 
 # Construir y ejecutar todos los contenedores
 docker-compose up -d
 ```
 
-## 3. 📚Swagger
+## 3. 📚Links y documentación
 
+- [swagger] Client gateway:
 <http://localhost:3000/api/docs>
 
-## 3. Pasos para crear los Git Submodules
+- [swagger] Payments:
+
+- NATS monitor:
+<http://localhost:8222>
+
+## 4. Pasos para crear los Git Submodules
 
 1. Crear un nuevo repositorio en GitHub
 2. Clonar el repositorio en la máquina local

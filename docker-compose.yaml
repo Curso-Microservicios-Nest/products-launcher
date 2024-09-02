@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   # 🚀 NATS
   nats-server:
@@ -51,6 +49,7 @@ services:
     command: npm run start:dev
     environment:
       - PORT=3003
+      - NATS_SERVERS=nats://nats-server:4222
       - BASE_URL=${PAYMENTS_MS_BASE_URL}
       - PAYPAL_BASE_URL=${PAYPAL_BASE_URL}
       - PAYPAL_CLIENT_ID=${PAYPAL_CLIENT_ID}

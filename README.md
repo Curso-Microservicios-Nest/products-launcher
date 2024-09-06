@@ -6,11 +6,14 @@
 
 Crear el archivo `.env` con base en `.env.example`
 
-### - 1.2 Reconstruir sub-módulos
+### - 1.2 Sub-módulos
 
 ```sh
 # Reconstruir los sub-módulos después de clonar
 git submodule update --init --recursive
+
+# Actualizar las referencias de los sub-módulos cuando se hacen cambios
+git submodule update --remote
 ```
 
 ## 2. 🐳Docker
@@ -25,10 +28,11 @@ docker-compose up -d
 
 ## 3. 📚Links y documentación
 
-- [swagger] Client gateway:
+- Client gateway:
 <http://localhost:3000/api/docs>
 
-- [swagger] Payments:
+- Payments:
+<http://localhost:3003/api/docs>
 
 - NATS monitor:
 <http://localhost:8222>

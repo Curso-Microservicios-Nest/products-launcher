@@ -30,6 +30,7 @@ services:
 
   orders-ms:
     build: ./orders-ms
+    restart: always
     volumes:
       - ./orders-ms/src:/usr/src/app/src
     command: npm run start:dev

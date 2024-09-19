@@ -18,26 +18,35 @@ services:
       - NATS_SERVERS=nats://nats-server:4222
 
   # 🟡 Services
+  auth-ms:
+    build: ./auth-ms
+    command: npm run start:dev
+    environment:
+      - PORT=3004
+      - NATS_SERVERS=nats://nats-server:4222
+    volumes:
+      - ./auth-ms/src:/usr/src/app/src
+
   products-ms:
     build: ./products-ms
-    volumes:
-      - ./products-ms/src:/usr/src/app/src
     command: npm run start:dev
     environment:
       - PORT=3001
       - DATABASE_URL=file:./dev.db
       - NATS_SERVERS=nats://nats-server:4222
+    volumes:
+      - ./products-ms/src:/usr/src/app/src
 
   orders-ms:
     build: ./orders-ms
     restart: always
-    volumes:
-      - ./orders-ms/src:/usr/src/app/src
     command: npm run start:dev
     environment:
       - PORT=3002
       - DATABASE_URL=postgresql://postgres:123456@orders-db:5432/orders_db?schema=public
       - NATS_SERVERS=nats://nats-server:4222
+    volumes:
+      - ./orders-ms/src:/usr/src/app/src
     depends_on:
       - orders-db
 
@@ -45,8 +54,6 @@ services:
     build: ./payments-ms
     ports:
       - "3003:3003"
-    volumes:
-      - ./payments-ms/src:/usr/src/app/src
     command: npm run start:dev
     environment:
       - PORT=3003
@@ -55,6 +62,8 @@ services:
       - PAYPAL_BASE_URL=${PAYPAL_BASE_URL}
       - PAYPAL_CLIENT_ID=${PAYPAL_CLIENT_ID}
       - PAYPAL_SECRET=${PAYPAL_SECRET}
+    volumes:
+      - ./payments-ms/src:/usr/src/app/src
 
   # 💿 Databases
   orders-db:

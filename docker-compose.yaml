@@ -24,11 +24,10 @@ services:
     environment:
       - PORT=3004
       - NATS_SERVERS=nats://nats-server:4222
-      - DATABASE_URL=mongodb://root:123456@db-mongo-users:27017
+      - DATABASE_URL=${USERS_MS_DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
     volumes:
       - ./auth-ms/src:/usr/src/app/src
-    depends_on:
-      - db-mongo-users
 
   products-ms:
     build: ./products-ms
@@ -82,15 +81,16 @@ services:
     volumes:
       - ./orders-ms/postgres_data:/var/lib/postgresql/data
 
-  db-mongo-users:
-    image: mongo:latest
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: 123456
-    ports:
-      - 27018:27017
-    volumes:
-      - mongo_data:/data/db
+  # db-mongo-users:
+  #   image: mongo:latest
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: 123456
+  #     MONGO_INITDB_DATABASE: auth_db
+  #   ports:
+  #     - 27018:27017
+  #   volumes:
+  #     - mongo_data:/data/db
 
 volumes:
   mongo_data:

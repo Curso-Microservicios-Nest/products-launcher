@@ -19,11 +19,8 @@ git submodule update --remote
 ## 2. 🐳Docker
 
 ```sh
-# Construir los contenedores (para desarrollo)
-docker-compose up --build
-
-# Construir y ejecutar todos los contenedores
-docker-compose up -d
+# Construir el entorno de Desarrollo con Docker
+docker-compose -f docker-compose.dev.yaml up --build
 ```
 
 ## 3. 📚Links y documentación

@@ -1,0 +1,66 @@
+services:
+  # 🚀 NATS
+  nats-server:
+    image: nats:latest
+
+  # 🟢 Client gateway
+  client-gateway:
+    build:
+      context: ./client-gateway
+      dockerfile: Dockerfile.prod
+    image: client-gateway-prod
+    ports:
+      - ${CLIENT_GATEWAY_PORT}:3000
+    environment:
+      - NATS_SERVERS=${NATS_SERVERS}
+
+  # 🟡 Services
+  auth-ms:
+    build:
+      context: ./auth-ms
+      dockerfile: Dockerfile.prod
+    image: auth-ms-prod
+    environment:
+      - NATS_SERVERS=${NATS_SERVERS}
+      - DATABASE_URL=${USERS_MS_DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+
+  products-ms:
+    restart: always
+    build:
+      context: ./products-ms
+      dockerfile: Dockerfile.prod
+    image: products-ms-prod
+    environment:
+      - NATS_SERVERS=${NATS_SERVERS}
+      - DATABASE_URL=file:./dev.db
+    volumes:
+      - data_db_products:/usr/src/app/prisma
+
+  orders-ms:
+    build:
+      context: ./orders-ms
+      dockerfile: Dockerfile.prod
+      args:
+        - DATABASE_URL=${ORDERS_MS_DATABASE_URL}
+    image: orders-ms-prod
+    environment:
+      - NATS_SERVERS=${NATS_SERVERS}
+      - DATABASE_URL=${ORDERS_MS_DATABASE_URL}
+
+  payments-ms:
+    build:
+      context: ./payments-ms
+      dockerfile: Dockerfile.prod
+    ports:
+      - 3003:3000
+    image: payments-ms-prod
+    environment:
+      - NATS_SERVERS=${NATS_SERVERS}
+      - BASE_URL=${PAYMENTS_MS_BASE_URL}
+      - PAYPAL_BASE_URL=${PAYPAL_BASE_URL}
+      - PAYPAL_CLIENT_ID=${PAYPAL_CLIENT_ID}
+      - PAYPAL_SECRET=${PAYPAL_SECRET}
+
+volumes:
+  data_db_products:

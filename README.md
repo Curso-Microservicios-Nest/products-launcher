@@ -18,9 +18,28 @@ git submodule update --remote
 
 ## 2. 🐳Docker
 
+Construir los entornos
+
+### Development
+
 ```sh
-# Construir el entorno de Desarrollo con Docker
+# Este comando utiliza Docker Compose para construir y arrancar los servicios
+# definidos en el archivo `docker-compose.dev.yaml`. La bandera `--build` fuerza
+# una reconstrucción de las imágenes antes de iniciar los contenedores.
 docker-compose -f docker-compose.dev.yaml up --build
+```
+
+### Production
+
+```sh
+# Contruir las imagenes
+docker-compose -f docker-compose.prod.yaml build
+
+# Ejecutar los contenedores
+docker-compose -f docker-compose.prod.yaml up
+
+# Detener los contenedores
+docker-compose -f docker-compose.prod.yaml down
 ```
 
 ## 3. 📚Links y documentación

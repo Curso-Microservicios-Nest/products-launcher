@@ -20,7 +20,7 @@ git submodule update --remote
 
 Construir los entornos
 
-### Development
+### 🚀Development
 
 ```sh
 # Este comando utiliza Docker Compose para construir y arrancar los servicios
@@ -29,7 +29,7 @@ Construir los entornos
 docker-compose -f docker-compose.dev.yaml up --build
 ```
 
-### Production
+### 📦Production
 
 ```sh
 # Contruir las imagenes
@@ -40,6 +40,33 @@ docker-compose -f docker-compose.prod.yaml up
 
 # Detener los contenedores
 docker-compose -f docker-compose.prod.yaml down
+```
+
+### ☁️Cloud
+
+Subir una imagen de producción, a la nube (Dockerhub, Azure Register Container, etc)
+
+```sh
+# Acceder al microservicio a subir
+cd auth-ms
+
+# Crear la imagen de producción
+docker build -f Dockerfile.prod -t auth-ms .
+
+# Etiqueta la imagen 'auth-ms' para el registro al que se va a subir (puede ser dockerhub)
+docker tag auth-ms tiendamicroserviciosnest.azurecr.io/auth-ms
+
+# También se puede crear la imagen directamente con el nombre a usar en el registro, para evitar renombrar la imagen
+docker build -f Dockerfile.prod -t tiendamicroserviciosnest.azurecr.io/auth-ms .
+
+# Iniciar sesión en Azure (tener instalado CLI de Azure y CLI de Docker)
+az login
+
+## Inicia sesión en el registro de contenedores de Azure con el nombre especificado.
+az acr login --name tiendamicroserviciosnest
+
+## Sube la imagen al registro de contenedores de Azure.
+docker push tiendamicroserviciosnest.azurecr.io/auth-ms
 ```
 
 ## 3. 📚Links y documentación
